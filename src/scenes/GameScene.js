@@ -15,11 +15,13 @@ import {
   formatNum,
 } from '../ui.js';
 import { submitScore } from '../save.js';
+import { RUN_FRAMES, RUN_FPS, FRAME_H } from '../pixelRunner.js';
 
 const STEP_MS = 1000 / 60;
 const GROUND = LAYOUT.GROUND_H;
-const RUN_H = 212; // player display height running
-const SLIDE_H = 132; // ... and sliding (placeholder bust; hitbox is decoupled)
+const SPRITE_SCALE = 6; // integer scale keeps the pixel art crisp (~204px tall)
+const FEET_Y = 1080 - GROUND + 6; // ground top + 6 (matches the prototype's foot anchor)
+const PLAYER_CX = HITBOX.x + HITBOX.w / 2; // sprite centered over the (decoupled) hitbox
 
 // Playable core. Fixed 60fps simulation ported from the prototype's DCLogic
 // (step/spawn/jump/endRun), tunables from TUNING. The runner sprite is the
@@ -63,6 +65,7 @@ export default class GameScene extends Phaser.Scene {
     this._energyLow = false;
     this.dispEnergy = this.g.energy; // displayed energy (CSS: transition width .2s linear)
 
+    this.defineAnims();
     this.buildWorld();
     this.buildHud();
     this.buildTouchControls();
@@ -81,6 +84,24 @@ export default class GameScene extends Phaser.Scene {
     this.updateHud(0);
 
     if (this.startPaused) this.openPause(); // dev shortcut ?screen=pause
+  }
+
+  // Animations live on the global AnimationManager — create once.
+  defineAnims() {
+    const mk = (key, frames, frameRate, repeat) => {
+      if (this.anims.exists(key)) return;
+      this.anims.create({
+        key,
+        frames: frames.map((f) => ({ key: 'rlanz-run', frame: f })),
+        frameRate,
+        repeat,
+      });
+    };
+    mk('rlanz-run', RUN_FRAMES, RUN_FPS, -1);
+    mk('rlanz-jump', ['jump'], 1, 0);
+    mk('rlanz-fall', ['fall'], 1, 0);
+    mk('rlanz-slide', ['slide'], 1, 0);
+    mk('rlanz-idle', ['run0'], 1, 0);
   }
 
   // -------------------------------------------------------------------------
@@ -107,11 +128,13 @@ export default class GameScene extends Phaser.Scene {
     this.laneTiles = this.add.tileSprite(0, 1080 - 96 - 10, 1920, 10, 'lane-dashes').setOrigin(0);
 
     this.shadow = this.add.image(262, 1080 - 126, 'player-shadow').setOrigin(0, 1);
-    // Center origin so tilt pivots at the sprite center (CSS transform-origin
-    // 50% 50%); updateVisuals() recomputes x/y from the left/feet anchor.
-    this.player = this.add.image(LAYOUT.PLAYER_X, 1080 - (GROUND - 6), 'rlanz-bust').setOrigin(0.5);
-    this.playerSrcH = this.player.height;
-    this.playerH = RUN_H;
+    // Animated 8-bit RLanz sprite. Bottom-center origin so the feet stay
+    // planted; collision uses HITBOX and never reads this sprite.
+    this.player = this.add
+      .sprite(PLAYER_CX, FEET_Y, 'rlanz-run', 'run0')
+      .setOrigin(0.5, 1)
+      .setScale(SPRITE_SCALE);
+    this.playerAnim = '';
 
     // Entities render over the player (matches the prototype's paint order).
     this.entLayer = this.add.container(0, 0);
@@ -555,23 +578,24 @@ export default class GameScene extends Phaser.Scene {
     const g = this.g;
     const sliding = g.sliding && g.grounded;
 
-    // Height transition ≈80ms (CSS: transition height .08s).
-    const target = sliding ? SLIDE_H : RUN_H;
-    const maxStep = ((RUN_H - SLIDE_H) / 80) * delta;
-    this.playerH += Phaser.Math.Clamp(target - this.playerH, -maxStep, maxStep);
-    const scale = this.playerH / this.playerSrcH;
-    this.player.setScale(scale);
+    // Pick the animation from the run state.
+    let anim;
+    if (!g.grounded) anim = g.vy > 0 ? 'rlanz-jump' : 'rlanz-fall';
+    else if (sliding) anim = 'rlanz-slide';
+    else if (g.started) anim = 'rlanz-run';
+    else anim = 'rlanz-idle';
+    if (anim !== this.playerAnim) {
+      this.playerAnim = anim;
+      this.player.play(anim, true);
+    }
 
-    // Run-bob (CSS: rl-bob .34s ease-in-out alternate → 680ms cosine cycle).
+    // Small run-bob on top of the leg animation (CSS rl-bob ≈ 680ms cycle).
     const bob =
       g.grounded && !sliding && g.started
-        ? -12 * (0.5 - 0.5 * Math.cos((2 * Math.PI * this.elapsed) / 680))
+        ? -6 * (0.5 - 0.5 * Math.cos((2 * Math.PI * this.elapsed) / 680))
         : 0;
-    // Position from the prototype's left/feet anchor, offset to the center
-    // origin so rotation pivots mid-sprite (hitbox is decoupled — untouched).
-    this.player.x = LAYOUT.PLAYER_X + (this.player.width * scale) / 2;
-    this.player.y = 1080 - (GROUND + g.py - 6) + bob - this.playerH / 2;
-    this.player.setAngle(sliding ? -20 : g.grounded ? 0 : 7);
+    this.player.x = PLAYER_CX;
+    this.player.y = FEET_Y - g.py + bob;
     const flash = g.inv > 0 && Math.floor(g.t / 4) % 2 === 0;
     this.player.setAlpha(flash ? 0.35 : 1);
 

@@ -3,7 +3,9 @@
 // with plain Phaser images. Icon-scale art is drawn oversized (2–4x) and
 // displayed at design size for crispness.
 
+import Phaser from 'phaser';
 import { COLORS } from './config.js';
+import { drawSheet, FRAME_W, FRAME_H, FRAMES } from './pixelRunner.js';
 
 function canvas(scene, key, w, h) {
   if (scene.textures.exists(key)) return null;
@@ -379,4 +381,18 @@ export function generateTextures(scene) {
   ]);
   makeLaneDashes(scene);
   makeGroundGlow(scene);
+  makeRunnerSheet(scene);
+}
+
+// Animated 8-bit RLanz runner. Drawn at logical resolution into one canvas
+// texture, NEAREST-filtered so it stays crisp when the sprite is scaled up,
+// with each frame registered by name for the GameScene animations.
+function makeRunnerSheet(scene) {
+  const key = 'rlanz-run';
+  if (scene.textures.exists(key)) return;
+  const tex = scene.textures.createCanvas(key, FRAME_W * FRAMES.length, FRAME_H);
+  drawSheet(tex.getContext());
+  tex.refresh();
+  tex.setFilter(Phaser.Textures.FilterMode.NEAREST);
+  FRAMES.forEach((name, i) => tex.add(name, 0, i * FRAME_W, 0, FRAME_W, FRAME_H));
 }

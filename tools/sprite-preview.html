@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>RLanz sprite preview</title>
+  <style>
+    body { margin: 0; background: #1d1733; color: #cfc6e8; font-family: monospace; }
+    #wrap { display: flex; flex-wrap: wrap; gap: 24px; padding: 24px; }
+    figure { margin: 0; text-align: center; }
+    canvas {
+      image-rendering: pixelated;
+      background:
+        conic-gradient(#2c2342 90deg, #271e3e 90deg 180deg, #2c2342 180deg 270deg, #271e3e 270deg) 0 0/24px 24px;
+      border: 1px solid #4a4358;
+    }
+    figcaption { margin-top: 6px; font-size: 13px; letter-spacing: 1px; }
+    #strip { padding: 0 24px 24px; }
+  </style>
+</head>
+<body>
+  <div id="strip"><canvas id="sheet"></canvas><div>raw sheet (1×)</div></div>
+  <div id="wrap"></div>
+  <script type="module">
+    import { drawSheet, FRAME_W, FRAME_H, FRAMES } from '/src/pixelRunner.js';
+
+    // raw 1x sheet
+    const sheet = document.getElementById('sheet');
+    sheet.width = FRAME_W * FRAMES.length;
+    sheet.height = FRAME_H;
+    drawSheet(sheet.getContext('2d'));
+
+    // per-frame, scaled 9x
+    const Z = 9;
+    const wrap = document.getElementById('wrap');
+    // re-render each frame individually by cropping the sheet
+    FRAMES.forEach((name, i) => {
+      const fig = document.createElement('figure');
+      const c = document.createElement('canvas');
+      c.width = FRAME_W * Z;
+      c.height = FRAME_H * Z;
+      const ctx = c.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.scale(Z, Z);
+      ctx.drawImage(sheet, i * FRAME_W, 0, FRAME_W, FRAME_H, 0, 0, FRAME_W, FRAME_H);
+      const cap = document.createElement('figcaption');
+      cap.textContent = name;
+      fig.appendChild(c);
+      fig.appendChild(cap);
+      wrap.appendChild(fig);
+    });
+
+    // tiny live run-cycle player
+    const run = ['run0', 'run1', 'run2', 'run3'];
+    const fig = document.createElement('figure');
+    const c = document.createElement('canvas');
+    c.width = FRAME_W * Z;
+    c.height = FRAME_H * Z;
+    const ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    let k = 0;
+    setInterval(() => {
+      ctx.clearRect(0, 0, c.width, c.height);
+      const idx = FRAMES.indexOf(run[k % run.length]);
+      ctx.drawImage(sheet, idx * FRAME_W, 0, FRAME_W, FRAME_H, 0, 0, FRAME_W * Z, FRAME_H * Z);
+      k++;
+    }, 1000 / 14);
+    const cap = document.createElement('figcaption');
+    cap.textContent = 'RUN (live 14fps)';
+    fig.appendChild(c);
+    fig.appendChild(cap);
+    wrap.appendChild(fig);
+  </script>
+</body>
+</html>

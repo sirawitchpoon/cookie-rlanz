@@ -12,6 +12,10 @@ Cookie Rlanz.zip
 .DS_Store
 Thumbs.db
 .wrangler/
+
+# QA / preview artifacts
 shots/
 live*/
 dep-check/
+gameshots/
+sprite.png
