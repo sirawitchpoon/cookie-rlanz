@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Mali:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#0f0c18;overflow:hidden;}
+@keyframes rl-bob{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+@keyframes rl-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes rl-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes rl-scroll{from{background-position-x:0}to{background-position-x:-1200px}}
+@keyframes rl-pop{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-90px);opacity:0}}
+@keyframes rl-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes rl-twinkle{0%,100%{opacity:.9}50%{opacity:.25}}
+@keyframes rl-dash{to{stroke-dashoffset:-44}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;background:#0f0c18;overflow:hidden;font-family:'Fredoka','Mali',sans-serif;color:#ffffff;user-select:none;-webkit-user-select:none;">
+  <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:{{ stageTransform }};overflow:hidden;background:linear-gradient(180deg,#332b52 0%,#1d1733 55%,#271e3e 100%);">
+
+    <!-- ============ TITLE ============ -->
+    <sc-if value="{{ showTitle }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="Title" onClick="{{ goMap }}" style="position:absolute;inset:0;cursor:pointer;">
+        <div style="position:absolute;inset:0;background-image:radial-gradient(2px 2px at 8% 18%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 23% 9%,#ffffff 50%,transparent 51%),radial-gradient(3px 3px at 41% 22%,#ffd9ea 50%,transparent 51%),radial-gradient(2px 2px at 64% 12%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 87% 24%,#bcd4ff 50%,transparent 51%),radial-gradient(2px 2px at 52% 6%,#ffffff 50%,transparent 51%),radial-gradient(3px 3px at 76% 7%,#ffd9ea 50%,transparent 51%),radial-gradient(2px 2px at 33% 38%,#bcd4ff 50%,transparent 51%);animation:rl-twinkle 3.2s ease-in-out infinite;"></div>
+        <div style="position:absolute;right:340px;top:90px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#fff3f9,#ffd9ea 60%,#f5b8d6);box-shadow:0 0 90px 30px rgba(255,217,234,.28);"></div>
+        <div style="position:absolute;left:-180px;bottom:-260px;width:760px;height:760px;border-radius:50%;background:rgba(242,88,156,.10);filter:blur(8px);"></div>
+        <div style="position:absolute;right:-120px;top:-200px;width:620px;height:620px;border-radius:50%;background:rgba(127,177,242,.10);filter:blur(8px);"></div>
+
+        <div style="position:absolute;right:48px;top:36px;display:flex;align-items:center;gap:16px;">
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:8px 22px 8px 12px;box-shadow:0 4px 0 #211c2b;">
+            <svg width="34" height="24" viewBox="0 0 40 28"><ellipse cx="15" cy="14" rx="13" ry="9" fill="#8db8f5" stroke="#211c2b" stroke-width="2"></ellipse><polygon points="26,14 38,5 38,23" fill="#5e8fe0" stroke="#211c2b" stroke-width="2"></polygon><circle cx="9.5" cy="12" r="2.4" fill="#211c2b"></circle></svg>
+            <span style="font-weight:600;font-size:26px;">{{ walletFish }}</span>
+            <span style="width:28px;height:28px;border-radius:50%;background:#f2589c;border:2px solid #211c2b;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;line-height:1;">+</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:8px 22px 8px 14px;box-shadow:0 4px 0 #211c2b;">
+            <svg width="36" height="22" viewBox="0 0 44 24"><circle cx="7" cy="12" r="5" fill="none" stroke="#e9c878" stroke-width="3"></circle><line x1="13" y1="12" x2="40" y2="12" stroke="#e9c878" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="5" stroke="#e9c878" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="19" stroke="#e9c878" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="6" stroke="#e9c878" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="18" stroke="#e9c878" stroke-width="3"></line></svg>
+            <span style="font-weight:600;font-size:26px;color:#f3dfae;">{{ walletBone }}</span>
+            <span style="width:28px;height:28px;border-radius:50%;background:#cfa85e;border:2px solid #211c2b;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;line-height:1;color:#3a2a10;">+</span>
+          </div>
+        </div>
+
+        <img src="assets/rlanz-bust.png" draggable="false" style="position:absolute;right:110px;bottom:-50px;height:930px;animation:rl-float 4.5s ease-in-out infinite;filter:drop-shadow(0 36px 50px rgba(0,0,0,.55));">
+        <div style="position:absolute;right:170px;bottom:36px;width:560px;height:60px;border-radius:50%;background:rgba(242,88,156,.22);filter:blur(16px);"></div>
+
+        <div style="position:absolute;left:140px;top:220px;display:flex;flex-direction:column;align-items:flex-start;gap:24px;">
+          <div style="background:linear-gradient(180deg,#ffd9ea,#f2589c);border:4px solid #211c2b;border-radius:999px;padding:8px 36px;transform:rotate(-3deg);box-shadow:0 6px 0 #211c2b;font-size:38px;font-weight:700;color:#3a1226;letter-spacing:8px;">COOKIE</div>
+          <div style="font-size:190px;font-weight:700;line-height:.92;letter-spacing:2px;color:#ffffff;text-shadow:-5px -5px 0 #211c2b,5px -5px 0 #211c2b,-5px 5px 0 #211c2b,5px 5px 0 #211c2b,0 14px 0 #211c2b,0 22px 44px rgba(242,88,156,.5);">RLANZ</div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:80px;height:8px;border-radius:99px;background:#f2589c;"></div>
+            <div style="font-family:'Mali';font-size:30px;font-weight:600;color:#cfc6e8;">วิ่งเก็บปลา ฝ่าเมืองยามค่ำคืน ไปกับแมวเงิน RLanz</div>
+            <div style="width:80px;height:8px;border-radius:99px;background:#7fb1f2;"></div>
+          </div>
+          <div style="margin-top:36px;animation:rl-pulse 1.6s ease-in-out infinite;background:linear-gradient(180deg,#ffe9a8,#cfa85e);border:5px solid #211c2b;box-shadow:0 9px 0 #211c2b;border-radius:26px;padding:22px 66px;font-size:44px;font-weight:700;color:#3a2a10;letter-spacing:4px;">TAP TO START</div>
+        </div>
+
+        <div style="position:absolute;left:40px;bottom:26px;font-size:20px;color:rgba(255,255,255,.45);letter-spacing:1px;">ver 0.1.0 — UI mockup · © 2026 RLanz Ch.</div>
+      </div>
+    </sc-if>
+
+    <!-- ============ STAGE MAP ============ -->
+    <sc-if value="{{ showMap }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Stage Map" style="position:absolute;inset:0;">
+        <div style="position:absolute;inset:0;background-image:radial-gradient(2px 2px at 12% 14%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 34% 8%,#ffd9ea 50%,transparent 51%),radial-gradient(2px 2px at 58% 16%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 81% 10%,#bcd4ff 50%,transparent 51%);animation:rl-twinkle 3.4s ease-in-out infinite;"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:420px;background:linear-gradient(180deg,rgba(43,35,68,0),#2b2344 40%,#241d39);"></div>
+
+        <div style="position:absolute;left:40px;top:36px;z-index:5;">
+          <div onClick="{{ goTitle }}" style="cursor:pointer;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:12px 30px;box-shadow:0 5px 0 #211c2b;font-size:28px;font-weight:600;letter-spacing:2px;" style-hover="background:rgba(40,32,60,.85)">‹ BACK</div>
+        </div>
+        <div style="position:absolute;left:50%;top:30px;transform:translateX(-50%);text-align:center;z-index:5;">
+          <div style="display:inline-block;background:linear-gradient(180deg,#a8c8f8,#7fb1f2);border:4px solid #211c2b;border-radius:22px;box-shadow:0 7px 0 #211c2b;padding:14px 54px;">
+            <div style="font-size:36px;font-weight:700;color:#13203a;letter-spacing:3px;">EPISODE 1 · MIDNIGHT STREAM CITY</div>
+            <div style="font-family:'Mali';font-size:22px;font-weight:600;color:#2b3f63;">เมืองสตรีมยามค่ำคืน — บทแรกของแมวเงิน</div>
+          </div>
+        </div>
+        <div style="position:absolute;right:48px;top:42px;display:flex;align-items:center;gap:16px;z-index:5;">
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:8px 22px 8px 12px;box-shadow:0 4px 0 #211c2b;">
+            <svg width="34" height="24" viewBox="0 0 40 28"><ellipse cx="15" cy="14" rx="13" ry="9" fill="#8db8f5" stroke="#211c2b" stroke-width="2"></ellipse><polygon points="26,14 38,5 38,23" fill="#5e8fe0" stroke="#211c2b" stroke-width="2"></polygon><circle cx="9.5" cy="12" r="2.4" fill="#211c2b"></circle></svg>
+            <span style="font-weight:600;font-size:26px;">{{ walletFish }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:8px 22px 8px 14px;box-shadow:0 4px 0 #211c2b;">
+            <svg width="36" height="22" viewBox="0 0 44 24"><circle cx="7" cy="12" r="5" fill="none" stroke="#e9c878" stroke-width="3"></circle><line x1="13" y1="12" x2="40" y2="12" stroke="#e9c878" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="5" stroke="#e9c878" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="19" stroke="#e9c878" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="6" stroke="#e9c878" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="18" stroke="#e9c878" stroke-width="3"></line></svg>
+            <span style="font-weight:600;font-size:26px;color:#f3dfae;">{{ walletBone }}</span>
+          </div>
+        </div>
+
+        <svg style="position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;" viewBox="0 0 1920 1080">
+          <path d="M240,560 C320,500 400,455 470,440 C570,420 660,520 740,540 C840,565 930,400 1010,380 C1100,360 1190,455 1270,470 C1360,488 1420,340 1500,330 C1580,322 1640,470 1700,520" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="10" stroke-linecap="round" stroke-dasharray="4 40" style="animation:rl-dash 2.2s linear infinite;"></path>
+        </svg>
+
+        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="7">
+          <div style="{{ st.style }}" onClick="{{ st.onClick }}">
+            <div style="height:30px;font-size:26px;color:#ffd76e;text-shadow:0 3px 0 #211c2b;letter-spacing:3px;text-align:center;">{{ st.stars }}</div>
+            <div style="{{ st.circleStyle }}">
+              <sc-if value="{{ st.locked }}" hint-placeholder-val="{{ false }}">
+                <div style="width:24px;height:19px;background:#6b6480;border-radius:4px;position:relative;margin-top:8px;">
+                  <div style="position:absolute;left:4px;top:-11px;width:16px;height:13px;border:4px solid #6b6480;border-bottom:none;border-radius:9px 9px 0 0;box-sizing:border-box;"></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ st.unlocked }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size:42px;font-weight:700;text-shadow:0 3px 0 rgba(0,0,0,.3);">{{ st.n }}</span>
+              </sc-if>
+            </div>
+            <sc-if value="{{ st.current }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:50%;top:-128px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;animation:rl-bounce 1.5s ease-in-out infinite;">
+                <img src="assets/rlanz-avatar.png" draggable="false" style="width:96px;height:96px;border-radius:50%;border:4px solid #ffd76e;box-shadow:0 6px 0 #211c2b;background:#332b52;">
+                <div style="background:#ffd76e;border:3px solid #211c2b;border-radius:999px;padding:1px 14px;font-size:18px;font-weight:700;color:#3a2a10;letter-spacing:2px;">YOU</div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+
+        <div style="position:absolute;right:90px;bottom:64px;width:580px;background:#f7f5fa;border:5px solid #211c2b;border-radius:28px;box-shadow:0 11px 0 #211c2b;padding:28px 34px;color:#211c2b;display:flex;flex-direction:column;gap:16px;z-index:6;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="background:#f2589c;border:3px solid #211c2b;border-radius:14px;padding:6px 18px;color:#ffffff;font-weight:700;font-size:26px;letter-spacing:2px;box-shadow:0 4px 0 #211c2b;">STAGE 1-4</div>
+            <div style="font-size:34px;font-weight:700;letter-spacing:1px;">NEON ROOFTOP</div>
+          </div>
+          <div style="font-family:'Mali';font-size:24px;font-weight:600;color:#4a4358;">วิ่งบนดาดฟ้าย่านนีออน เก็บปลาให้ครบ แล้วระวังป้าย ON AIR — ต้องสไลด์ลอดเท่านั้น!</div>
+          <div style="display:flex;align-items:center;gap:24px;font-size:24px;font-weight:600;color:#4a4358;">
+            <span>BEST <span style="color:#f2589c;font-weight:700;">{{ mapBest }}</span></span>
+            <span style="color:#ffb02e;">★★☆</span>
+          </div>
+          <div onClick="{{ startStage }}" style="cursor:pointer;background:linear-gradient(180deg,#ff8cc0,#f2589c);border:4px solid #211c2b;border-radius:20px;box-shadow:0 8px 0 #211c2b;padding:18px 0;text-align:center;font-size:40px;font-weight:700;color:#ffffff;letter-spacing:6px;text-shadow:0 3px 0 rgba(0,0,0,.25);" style-hover="filter:brightness(1.08)" style-active="transform:translateY(4px);box-shadow:0 4px 0 #211c2b">PLAY ▶</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ GAMEPLAY ============ -->
+    <sc-if value="{{ showGame }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Gameplay" style="position:absolute;inset:0;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:radial-gradient(2px 2px at 10% 16%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 30% 8%,#ffd9ea 50%,transparent 51%),radial-gradient(2px 2px at 55% 18%,#ffffff 50%,transparent 51%),radial-gradient(2px 2px at 78% 9%,#bcd4ff 50%,transparent 51%),radial-gradient(2px 2px at 92% 22%,#ffffff 50%,transparent 51%);animation:rl-twinkle 3s ease-in-out infinite;"></div>
+        <div style="position:absolute;right:240px;top:80px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#fff3f9,#ffd9ea 60%,#f5b8d6);box-shadow:0 0 70px 24px rgba(255,217,234,.25);"></div>
+        <div style="position:absolute;left:0;right:0;bottom:140px;height:340px;background:repeating-linear-gradient(90deg,#262040 0px,#262040 110px,transparent 110px,transparent 190px,#2b2448 190px,#2b2448 310px,transparent 310px,transparent 380px,#242038 380px,#242038 470px,transparent 470px,transparent 600px);opacity:.75;animation:rl-scroll 36s linear infinite;"></div>
+        <div style="position:absolute;left:0;right:0;bottom:140px;height:210px;background:repeating-linear-gradient(90deg,#1c1730 0px,#1c1730 150px,transparent 150px,transparent 230px,#1f1a35 230px,#1f1a35 330px,transparent 330px,transparent 480px);animation:rl-scroll 18s linear infinite;"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:140px;background:#2c2342;border-top:6px solid #f2589c;box-shadow:0 -6px 24px rgba(242,88,156,.35);"></div>
+        <div style="position:absolute;left:0;right:0;bottom:96px;height:10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0px,rgba(255,255,255,.22) 80px,transparent 80px,transparent 220px);animation:rl-scroll 1.1s linear infinite;"></div>
+
+        {{ playfield }}
+
+        <div style="position:absolute;left:40px;top:34px;display:flex;align-items:center;gap:18px;z-index:10;">
+          <div onClick="{{ togglePause }}" style="cursor:pointer;width:84px;height:84px;border-radius:22px;background:rgba(16,12,28,.74);border:4px solid #211c2b;box-shadow:0 5px 0 #211c2b;display:flex;align-items:center;justify-content:center;gap:10px;" style-hover="background:rgba(40,32,60,.9)">
+            <div style="width:11px;height:36px;border-radius:5px;background:#ffffff;"></div>
+            <div style="width:11px;height:36px;border-radius:5px;background:#ffffff;"></div>
+          </div>
+          <img src="assets/rlanz-avatar.png" draggable="false" style="width:92px;height:92px;border-radius:50%;border:4px solid #ffffff;box-shadow:0 5px 0 #211c2b;background:#332b52;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="font-size:19px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,.65);">ENERGY</div>
+            <div style="width:520px;height:36px;border-radius:999px;border:4px solid #211c2b;background:rgba(16,12,28,.7);overflow:hidden;box-shadow:0 4px 0 #211c2b;">
+              <div style="{{ energyFillStyle }}"></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;right:48px;top:26px;text-align:right;z-index:10;">
+          <div style="font-size:72px;font-weight:700;line-height:1.05;text-shadow:-3px -3px 0 #211c2b,3px -3px 0 #211c2b,-3px 3px 0 #211c2b,3px 3px 0 #211c2b,0 8px 0 #211c2b;">{{ hudScore }}</div>
+          <div style="display:flex;justify-content:flex-end;align-items:center;gap:18px;margin-top:8px;">
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:6px 18px 6px 10px;box-shadow:0 4px 0 #211c2b;">
+              <svg width="32" height="22" viewBox="0 0 40 28"><ellipse cx="15" cy="14" rx="13" ry="9" fill="#8db8f5" stroke="#211c2b" stroke-width="2"></ellipse><polygon points="26,14 38,5 38,23" fill="#5e8fe0" stroke="#211c2b" stroke-width="2"></polygon><circle cx="9.5" cy="12" r="2.4" fill="#211c2b"></circle></svg>
+              <span style="font-weight:600;font-size:26px;">{{ hudFish }}</span>
+            </div>
+            <div style="background:rgba(16,12,28,.72);border:3px solid #211c2b;border-radius:999px;padding:6px 20px;box-shadow:0 4px 0 #211c2b;font-weight:600;font-size:26px;color:#bcd4ff;">{{ hudDist }}</div>
+          </div>
+        </div>
+
+        <sc-if value="{{ showHint }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);text-align:center;z-index:10;animation:rl-pulse 1.6s ease-in-out infinite;background:rgba(16,12,28,.82);border:4px solid #211c2b;border-radius:26px;box-shadow:0 8px 0 #211c2b;padding:26px 48px;">
+            <div style="font-size:38px;font-weight:700;letter-spacing:2px;">SPACE / ▲ &nbsp;JUMP &nbsp;·&nbsp; ▼ &nbsp;SLIDE</div>
+            <div style="font-family:'Mali';font-size:27px;font-weight:600;color:#ffd9ea;margin-top:8px;">กด JUMP เพื่อเริ่มวิ่ง — เก็บปลา หลบสิ่งกีดขวาง!</div>
+          </div>
+        </sc-if>
+
+        <div onPointerDown="{{ slideOn }}" onPointerUp="{{ slideOff }}" onPointerLeave="{{ slideOff }}" style="position:absolute;left:64px;bottom:54px;width:180px;height:180px;border-radius:50%;background:rgba(127,177,242,.28);border:5px solid #7fb1f2;box-shadow:0 8px 0 rgba(0,0,0,.4), inset 0 4px 18px rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:10;touch-action:none;" style-active="transform:translateY(5px);box-shadow:0 3px 0 rgba(0,0,0,.4)">
+          <div style="font-size:52px;line-height:1;color:#dcebff;text-shadow:0 4px 0 rgba(0,0,0,.35);">▼</div>
+          <div style="font-size:26px;font-weight:700;letter-spacing:4px;color:#dcebff;">SLIDE</div>
+        </div>
+        <div onPointerDown="{{ jump }}" style="position:absolute;right:64px;bottom:54px;width:180px;height:180px;border-radius:50%;background:rgba(242,88,156,.32);border:5px solid #f2589c;box-shadow:0 8px 0 rgba(0,0,0,.4), inset 0 4px 18px rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:10;touch-action:none;" style-active="transform:translateY(5px);box-shadow:0 3px 0 rgba(0,0,0,.4)">
+          <div style="font-size:52px;line-height:1;color:#ffd9ea;text-shadow:0 4px 0 rgba(0,0,0,.35);">▲</div>
+          <div style="font-size:26px;font-weight:700;letter-spacing:4px;color:#ffd9ea;">JUMP</div>
+        </div>
+
+        <!-- pause overlay -->
+        <sc-if value="{{ paused }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Pause" style="position:absolute;inset:0;background:rgba(13,10,22,.78);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:20;">
+            <div style="position:relative;width:620px;background:#f7f5fa;border:5px solid #211c2b;border-radius:32px;box-shadow:0 12px 0 #211c2b;padding:170px 48px 44px;color:#211c2b;display:flex;flex-direction:column;gap:16px;align-items:stretch;">
+              <img src="assets/rlanz-mad.png" draggable="false" style="position:absolute;left:50%;top:-180px;transform:translateX(-50%);height:330px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.4));pointer-events:none;">
+              <div style="text-align:center;font-size:56px;font-weight:700;letter-spacing:6px;">PAUSED</div>
+              <div style="text-align:center;font-family:'Mali';font-size:27px;font-weight:600;color:#4a4358;margin-top:-10px;">พักเบรกแป๊บนึง… อย่าหนีไปไหนนะ!</div>
+              <div style="display:flex;justify-content:center;gap:18px;margin:6px 0 4px;">
+                <div style="display:flex;align-items:center;gap:10px;background:#eae6f2;border:3px solid #211c2b;border-radius:999px;padding:8px 22px;font-weight:600;font-size:22px;">BGM <span style="width:46px;height:26px;border-radius:99px;background:#f2589c;border:2px solid #211c2b;position:relative;"><span style="position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#ffffff;"></span></span></div>
+                <div style="display:flex;align-items:center;gap:10px;background:#eae6f2;border:3px solid #211c2b;border-radius:999px;padding:8px 22px;font-weight:600;font-size:22px;">SFX <span style="width:46px;height:26px;border-radius:99px;background:#f2589c;border:2px solid #211c2b;position:relative;"><span style="position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#ffffff;"></span></span></div>
+              </div>
+              <div onClick="{{ resume }}" style="cursor:pointer;background:linear-gradient(180deg,#ff8cc0,#f2589c);border:4px solid #211c2b;border-radius:20px;box-shadow:0 7px 0 #211c2b;padding:16px 0;text-align:center;font-size:36px;font-weight:700;color:#ffffff;letter-spacing:4px;text-shadow:0 3px 0 rgba(0,0,0,.25);" style-active="transform:translateY(4px);box-shadow:0 3px 0 #211c2b">RESUME ▶</div>
+              <div style="display:flex;gap:16px;">
+                <div onClick="{{ retry }}" style="flex:1;cursor:pointer;background:linear-gradient(180deg,#ffe9a8,#cfa85e);border:4px solid #211c2b;border-radius:20px;box-shadow:0 7px 0 #211c2b;padding:14px 0;text-align:center;font-size:30px;font-weight:700;color:#3a2a10;letter-spacing:2px;" style-active="transform:translateY(4px);box-shadow:0 3px 0 #211c2b">RETRY ↺</div>
+                <div onClick="{{ quitToMap }}" style="flex:1;cursor:pointer;background:#4a4358;border:4px solid #211c2b;border-radius:20px;box-shadow:0 7px 0 #211c2b;padding:14px 0;text-align:center;font-size:30px;font-weight:700;color:#ffffff;letter-spacing:2px;" style-active="transform:translateY(4px);box-shadow:0 3px 0 #211c2b">MAP</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ============ RESULT ============ -->
+    <sc-if value="{{ showResult }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Result" style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(242,88,156,.16),transparent 60%);display:flex;align-items:center;justify-content:center;">
+        <img src="assets/rlanz-bust.png" draggable="false" style="position:absolute;right:60px;bottom:-70px;height:760px;filter:drop-shadow(0 28px 40px rgba(0,0,0,.5));opacity:.97;">
+        <div style="position:relative;width:780px;background:#f7f5fa;border:5px solid #211c2b;border-radius:34px;box-shadow:0 13px 0 #211c2b;padding:90px 56px 46px;color:#211c2b;display:flex;flex-direction:column;gap:10px;margin-left:-200px;">
+          <div style="position:absolute;left:50%;top:-44px;transform:translateX(-50%) rotate(-2deg);background:linear-gradient(180deg,#ff8cc0,#f2589c);border:4px solid #211c2b;border-radius:999px;box-shadow:0 7px 0 #211c2b;padding:14px 60px;font-size:44px;font-weight:700;color:#ffffff;letter-spacing:5px;text-shadow:0 3px 0 rgba(0,0,0,.25);white-space:nowrap;">{{ resTitle }}</div>
+          <div style="display:flex;justify-content:center;gap:26px;margin:10px 0 6px;">
+            <sc-for list="{{ starsArr }}" as="stt" hint-placeholder-count="3">
+              <span style="{{ stt.style }}">★</span>
+            </sc-for>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:30px;font-weight:600;padding:10px 8px;border-bottom:3px dashed #d8d2e4;">
+            <span style="color:#4a4358;letter-spacing:2px;">DISTANCE</span><span style="font-weight:700;">{{ resDist }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:30px;font-weight:600;padding:10px 8px;border-bottom:3px dashed #d8d2e4;">
+            <span style="display:flex;align-items:center;gap:12px;color:#4a4358;letter-spacing:2px;"><svg width="36" height="25" viewBox="0 0 40 28"><ellipse cx="15" cy="14" rx="13" ry="9" fill="#8db8f5" stroke="#211c2b" stroke-width="2"></ellipse><polygon points="26,14 38,5 38,23" fill="#5e8fe0" stroke="#211c2b" stroke-width="2"></polygon><circle cx="9.5" cy="12" r="2.4" fill="#211c2b"></circle></svg>FISH</span><span style="font-weight:700;">{{ resFish }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:30px;font-weight:600;padding:10px 8px;border-bottom:3px dashed #d8d2e4;">
+            <span style="display:flex;align-items:center;gap:12px;color:#4a4358;letter-spacing:2px;"><svg width="38" height="23" viewBox="0 0 44 24"><circle cx="7" cy="12" r="5" fill="none" stroke="#c9963f" stroke-width="3"></circle><line x1="13" y1="12" x2="40" y2="12" stroke="#c9963f" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="5" stroke="#c9963f" stroke-width="3"></line><line x1="19" y1="12" x2="25" y2="19" stroke="#c9963f" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="6" stroke="#c9963f" stroke-width="3"></line><line x1="27" y1="12" x2="33" y2="18" stroke="#c9963f" stroke-width="3"></line></svg>GOLD FISHBONE</span><span style="font-weight:700;">{{ resBone }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 8px 4px;">
+            <span style="font-size:34px;font-weight:700;letter-spacing:3px;">TOTAL</span>
+            <span style="display:flex;align-items:center;gap:16px;">
+              <sc-if value="{{ resNewBest }}" hint-placeholder-val="{{ false }}">
+                <span style="background:#ffd76e;border:3px solid #211c2b;border-radius:999px;padding:4px 18px;font-size:22px;font-weight:700;color:#3a2a10;letter-spacing:2px;transform:rotate(-3deg);box-shadow:0 4px 0 #211c2b;">NEW BEST!</span>
+              </sc-if>
+              <span style="font-size:58px;font-weight:700;color:#f2589c;text-shadow:0 4px 0 rgba(33,28,43,.18);">{{ resScore }}</span>
+            </span>
+          </div>
+          <div style="text-align:center;font-family:'Mali';font-size:24px;font-weight:600;color:#4a4358;">เก่งมาก! กลับมาวิ่งใหม่อีกรอบนะ~</div>
+          <div style="display:flex;gap:18px;margin-top:14px;">
+            <div onClick="{{ retry }}" style="flex:1.4;cursor:pointer;background:linear-gradient(180deg,#ff8cc0,#f2589c);border:4px solid #211c2b;border-radius:20px;box-shadow:0 8px 0 #211c2b;padding:18px 0;text-align:center;font-size:36px;font-weight:700;color:#ffffff;letter-spacing:4px;text-shadow:0 3px 0 rgba(0,0,0,.25);" style-active="transform:translateY(4px);box-shadow:0 4px 0 #211c2b">RETRY ↺</div>
+            <div onClick="{{ quitToMap }}" style="flex:1;cursor:pointer;background:#4a4358;border:4px solid #211c2b;border-radius:20px;box-shadow:0 8px 0 #211c2b;padding:18px 0;text-align:center;font-size:36px;font-weight:700;color:#ffffff;letter-spacing:3px;" style-active="transform:translateY(4px);box-shadow:0 4px 0 #211c2b">MAP</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- design navigation (mockup only) -->
+  <div style="position:fixed;left:16px;bottom:14px;display:flex;gap:8px;align-items:center;background:rgba(8,6,16,.88);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 14px;z-index:50;font-size:14px;">
+    <span style="opacity:.5;letter-spacing:2px;">SCREENS</span>
+    <span onClick="{{ navTitle }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.08);" style-hover="background:rgba(242,88,156,.4)">Title</span>
+    <span onClick="{{ goMap }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.08);" style-hover="background:rgba(242,88,156,.4)">Map</span>
+    <span onClick="{{ startStage }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.08);" style-hover="background:rgba(242,88,156,.4)">Game</span>
+    <span onClick="{{ navPause }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.08);" style-hover="background:rgba(242,88,156,.4)">Pause</span>
+    <span onClick="{{ navResult }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.08);" style-hover="background:rgba(242,88,156,.4)">Result</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 'title',
+    paused: false,
+    scale: 1, ox: 0, oy: 0,
+    hud: { score: 0, fish: 0, energy: 100, dist: 0, started: false },
+    result: { score: 12450, fish: 86, bone: 3, dist: 842, stars: 3, best: 12450, newBest: true },
+  };
+
+  g = null;
+  eid = 0;
+
+  componentDidMount() {
+    this.onResize = () => {
+      const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      this.setState({ scale: s, ox: (window.innerWidth - 1920 * s) / 2, oy: (window.innerHeight - 1080 * s) / 2 });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.onKeyDown = (e) => {
+      if (this.state.screen !== 'game') return;
+      if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') { e.preventDefault(); this.jump(); }
+      else if (e.code === 'ArrowDown' || e.code === 'KeyS') { e.preventDefault(); this.slideOn(); }
+      else if (e.code === 'Escape' || e.code === 'KeyP') { this.togglePause(); }
+    };
+    this.onKeyUp = (e) => { if (e.code === 'ArrowDown' || e.code === 'KeyS') this.slideOff(); };
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
+  }
+
+  newGame() {
+    this.g = {
+      started: false, over: false, t: 0, speed: 13, dist: 0,
+      fish: 0, bone: 0, energy: 100,
+      py: 0, vy: 0, jumps: 0, grounded: true, sliding: false, inv: 0,
+      ents: [], fx: [], spawnIn: 70,
+    };
+  }
+
+  startStage = () => {
+    this.newGame();
+    this.setState({ screen: 'game', paused: false, hud: { score: 0, fish: 0, energy: 100, dist: 0, started: false } });
+  };
+
+  jump = () => {
+    const g = this.g;
+    if (!g || this.state.paused || g.over || this.state.screen !== 'game') return;
+    if (!g.started) g.started = true;
+    if (g.grounded) { g.vy = 30; g.grounded = false; g.sliding = false; g.jumps = 1; }
+    else if (g.jumps < 2) { g.vy = 27; g.jumps = 2; }
+  };
+
+  slideOn = () => { const g = this.g; if (!g || g.over) return; if (!g.started) g.started = true; g.sliding = true; };
+  slideOff = () => { const g = this.g; if (g) g.sliding = false; };
+
+  togglePause = () => { if (this.state.screen === 'game') this.setState({ paused: !this.state.paused }); };
+
+  loop = () => {
+    this.raf = requestAnimationFrame(this.loop);
+    const g = this.g;
+    if (this.state.screen !== 'game' || !g) return;
+    if (!this.state.paused && !g.over && g.started) this.step(g);
+    if (!this.state.paused) {
+      const score = Math.floor(g.dist / 10) + g.fish * 100 + g.bone * 500;
+      this.setState({ hud: { score, fish: g.fish, energy: g.energy, dist: Math.floor(g.dist / 100), started: g.started } });
+    }
+  };
+
+  step(g) {
+    g.t++;
+    g.speed = 13 + Math.min(9, (g.dist / 25000) * 9);
+    g.dist += g.speed;
+    g.energy -= 0.033;
+    if (g.inv > 0) g.inv--;
+
+    if (!g.grounded) {
+      g.vy -= 1.9;
+      g.py += g.vy;
+      if (g.py <= 0) { g.py = 0; g.vy = 0; g.grounded = true; g.jumps = 0; }
+    }
+
+    if (--g.spawnIn <= 0) {
+      this.spawn(g);
+      g.spawnIn = 55 + Math.random() * 70 - Math.min(25, (g.dist / 40000) * 25);
+    }
+
+    for (const e of g.ents) e.x -= g.speed;
+    g.ents = g.ents.filter((e) => e.x > -400 && !e.dead);
+
+    const px = 270, pw = 110;
+    const ph = (g.sliding && g.grounded) ? 110 : 190;
+    const pyv = g.py;
+    for (const e of g.ents) {
+      if (e.dead) continue;
+      const hit = px < e.x + e.w && px + pw > e.x && pyv < e.y + e.h && pyv + ph > e.y;
+      if (!hit) continue;
+      if (e.type === 'fish') { e.dead = true; g.fish++; this.addFx(g, e.x, e.y + 60, '+100', '#8db8f5'); }
+      else if (e.type === 'bone') { e.dead = true; g.bone++; this.addFx(g, e.x, e.y + 60, '+500', '#ffd76e'); }
+      else if (g.inv <= 0) { g.inv = 70; g.energy -= 12; this.addFx(g, px + 40, pyv + 220, '-12', '#ff6b5e'); }
+    }
+    g.fx = g.fx.filter((f) => g.t - f.t0 < 45);
+
+    if (g.energy <= 0) { g.energy = 0; this.endRun(g); }
+  }
+
+  addFx(g, x, y, text, color) { g.fx.push({ id: ++this.eid, t0: g.t, x, y, text, color }); }
+
+  spawn(g) {
+    const X = 2100;
+    const push = (e) => { e.id = ++this.eid; g.ents.push(e); };
+    const r = Math.random();
+    if (r < 0.24) push({ type: 'crate', x: X, y: 0, w: 96, h: 112 });
+    else if (r < 0.4) push({ type: 'crate2', x: X, y: 0, w: 96, h: 224 });
+    else if (r < 0.6) push({ type: 'banner', x: X, y: 150, w: 150, h: 790 });
+    else if (r < 0.8) { for (let i = 0; i < 5; i++) push({ type: 'fish', x: X + i * 112, y: 34, w: 44, h: 34 }); }
+    else {
+      const ys = [110, 205, 258, 205, 110];
+      for (let i = 0; i < 5; i++) push({ type: 'fish', x: X + i * 95, y: ys[i], w: 44, h: 34 });
+      push({ type: 'crate', x: X + 190, y: 0, w: 96, h: 112 });
+      if (Math.random() < 0.35) push({ type: 'bone', x: X + 5 * 95 + 240, y: 300, w: 52, h: 30 });
+    }
+  }
+
+  endRun(g) {
+    if (g.over) return;
+    g.over = true;
+    const score = Math.floor(g.dist / 10) + g.fish * 100 + g.bone * 500;
+    const stars = score >= 9000 ? 3 : score >= 4500 ? 2 : score >= 1500 ? 1 : 0;
+    let best = 0;
+    try { best = parseInt(localStorage.getItem('cookie-rlanz-best') || '0', 10) || 0; } catch (e) {}
+    const newBest = score > best;
+    if (newBest) { try { localStorage.setItem('cookie-rlanz-best', String(score)); } catch (e) {} }
+    const result = { score, fish: g.fish, bone: g.bone, dist: Math.floor(g.dist / 100), stars, best: Math.max(best, score), newBest };
+    setTimeout(() => this.setState({ screen: 'result', paused: false, result }), 700);
+  }
+
+  buildPlayfield() {
+    const g = this.g;
+    const R = React.createElement;
+    if (!g || this.state.screen !== 'game') return null;
+    const GROUND = 140;
+    const kids = [];
+
+    const shScale = Math.max(0.45, 1 - g.py / 420);
+    kids.push(R('div', { key: 'sh', style: { position: 'absolute', left: 262, bottom: 126, width: 180 * shScale, height: 28 * shScale, background: 'rgba(0,0,0,.42)', borderRadius: '50%', filter: 'blur(4px)' } }));
+
+    const sliding = g.sliding && g.grounded;
+    const flash = g.inv > 0 && Math.floor(g.t / 4) % 2 === 0;
+    kids.push(R('img', {
+      key: 'pl', src: 'assets/rlanz-bust.png', draggable: false,
+      style: {
+        position: 'absolute', left: 240, bottom: GROUND + g.py - 6, height: sliding ? 132 : 212,
+        opacity: flash ? 0.35 : 1,
+        transform: sliding ? 'rotate(-20deg)' : (g.grounded ? undefined : 'rotate(7deg)'),
+        animation: (g.grounded && !sliding && g.started) ? 'rl-bob .34s ease-in-out infinite alternate' : 'none',
+        filter: 'drop-shadow(0 6px 10px rgba(0,0,0,.45))', transition: 'height .08s',
+      },
+    }));
+
+    for (const e of g.ents) {
+      if (e.type === 'fish') {
+        kids.push(R('svg', { key: e.id, viewBox: '0 0 40 28', style: { position: 'absolute', left: e.x, bottom: GROUND + e.y, width: e.w, height: e.h } },
+          R('ellipse', { cx: 15, cy: 14, rx: 13, ry: 9, fill: '#8db8f5', stroke: '#211c2b', strokeWidth: 2 }),
+          R('polygon', { points: '26,14 38,5 38,23', fill: '#5e8fe0', stroke: '#211c2b', strokeWidth: 2 }),
+          R('circle', { cx: 9.5, cy: 12, r: 2.4, fill: '#211c2b' })));
+      } else if (e.type === 'bone') {
+        kids.push(R('svg', { key: e.id, viewBox: '0 0 44 24', style: { position: 'absolute', left: e.x, bottom: GROUND + e.y, width: e.w, height: e.h, filter: 'drop-shadow(0 0 8px rgba(233,200,120,.85))' } },
+          R('circle', { cx: 7, cy: 12, r: 5, fill: 'none', stroke: '#e9c878', strokeWidth: 3 }),
+          R('line', { x1: 13, y1: 12, x2: 40, y2: 12, stroke: '#e9c878', strokeWidth: 3 }),
+          R('line', { x1: 19, y1: 12, x2: 25, y2: 5, stroke: '#e9c878', strokeWidth: 3 }),
+          R('line', { x1: 19, y1: 12, x2: 25, y2: 19, stroke: '#e9c878', strokeWidth: 3 }),
+          R('line', { x1: 27, y1: 12, x2: 33, y2: 6, stroke: '#e9c878', strokeWidth: 3 }),
+          R('line', { x1: 27, y1: 12, x2: 33, y2: 18, stroke: '#e9c878', strokeWidth: 3 })));
+      } else if (e.type === 'crate' || e.type === 'crate2') {
+        kids.push(R('div', { key: e.id, style: { position: 'absolute', left: e.x, bottom: GROUND, width: e.w, height: e.h, borderRadius: 12, border: '4px solid #211c2b', boxSizing: 'border-box', background: e.type === 'crate' ? 'repeating-linear-gradient(45deg,#f2589c 0 16px,#241e34 16px 32px)' : 'repeating-linear-gradient(45deg,#7fb1f2 0 16px,#241e34 16px 32px)', boxShadow: '0 6px 0 rgba(0,0,0,.35)' } }));
+      } else if (e.type === 'banner') {
+        kids.push(R('div', { key: e.id, style: { position: 'absolute', left: e.x, bottom: GROUND + e.y, width: e.w, height: e.h } },
+          R('div', { style: { position: 'absolute', left: '50%', marginLeft: -7, top: 0, width: 14, height: '100%', background: '#37304c', borderLeft: '3px solid #211c2b', borderRight: '3px solid #211c2b', boxSizing: 'border-box' } }),
+          R('div', { style: { position: 'absolute', left: 0, bottom: 0, width: '100%', height: 96, background: 'linear-gradient(180deg,#ff7eb8,#f2589c)', border: '4px solid #211c2b', borderRadius: 14, boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, fontWeight: 700, fontSize: 27, color: '#fff', textShadow: '0 2px 0 rgba(0,0,0,.3)' } },
+            R('span', { style: { width: 15, height: 15, borderRadius: '50%', background: '#ff2d2d', boxShadow: '0 0 10px #ff2d2d' } }), 'ON AIR')));
+      }
+    }
+
+    for (const f of g.fx) {
+      kids.push(R('div', { key: 'fx' + f.id, style: { position: 'absolute', left: f.x, bottom: GROUND + f.y, fontWeight: 700, fontSize: 36, color: f.color, textShadow: '0 3px 0 #211c2b', animation: 'rl-pop .72s ease-out forwards', pointerEvents: 'none' } }, f.text));
+    }
+
+    return R('div', { style: { position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 2 } }, kids);
+  }
+
+  mapStages() {
+    const pts = [[240, 560], [470, 440], [740, 540], [1010, 380], [1270, 470], [1500, 330], [1700, 520]];
+    const earned = [3, 2, 3];
+    return pts.map((p, i) => {
+      const done = i < 3, current = i === 3, locked = i > 3;
+      const size = current ? 112 : 88;
+      return {
+        n: i + 1, done, current, locked, unlocked: !locked,
+        stars: done ? '★'.repeat(earned[i]) : '',
+        onClick: locked ? undefined : this.startStage,
+        style: { position: 'absolute', left: p[0] - 60, top: p[1] - 44, width: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: locked ? 'default' : 'pointer', zIndex: 3 },
+        circleStyle: {
+          width: size, height: size, borderRadius: '50%', border: '4px solid #211c2b',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', boxSizing: 'border-box',
+          background: done ? 'linear-gradient(180deg,#ff9ec9,#f2589c)' : current ? 'linear-gradient(180deg,#ffe9a8,#cfa85e)' : '#39334b',
+          color: done ? '#ffffff' : current ? '#3a2a10' : '#6b6480',
+          boxShadow: current ? '0 0 0 9px rgba(255,215,110,.3), 0 7px 0 #211c2b' : '0 7px 0 #211c2b',
+        },
+      };
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const fmt = (n) => Math.floor(n).toLocaleString('en-US');
+    const res = s.result;
+    let best = 12450;
+    try { best = Math.max(best, parseInt(localStorage.getItem('cookie-rlanz-best') || '0', 10) || 0); } catch (e) {}
+    const starsArr = [0, 1, 2].map((i) => ({
+      style: {
+        fontSize: 88, lineHeight: 1,
+        color: i < res.stars ? '#ffd76e' : '#cdc7da',
+        textShadow: i < res.stars ? '0 5px 0 #211c2b, 0 0 28px rgba(255,215,110,.6)' : '0 5px 0 rgba(33,28,43,.25)',
+        transform: i === 1 ? 'translateY(-16px) scale(1.2)' : 'none',
+      },
+    }));
+    return {
+      stageTransform: 'translate(' + s.ox + 'px,' + s.oy + 'px) scale(' + s.scale + ')',
+      showTitle: s.screen === 'title', showMap: s.screen === 'map',
+      showGame: s.screen === 'game', showResult: s.screen === 'result',
+      paused: s.paused,
+      walletFish: fmt(12480), walletBone: fmt(36), mapBest: fmt(best),
+      goMap: () => this.setState({ screen: 'map', paused: false }),
+      goTitle: () => this.setState({ screen: 'title', paused: false }),
+      navTitle: () => this.setState({ screen: 'title', paused: false }),
+      navPause: () => { if (this.state.screen !== 'game' || !this.g) this.newGame(); this.setState({ screen: 'game', paused: true }); },
+      navResult: () => this.setState({ screen: 'result', paused: false }),
+      startStage: this.startStage, retry: this.startStage,
+      jump: this.jump, slideOn: this.slideOn, slideOff: this.slideOff,
+      togglePause: this.togglePause,
+      resume: () => this.setState({ paused: false }),
+      quitToMap: () => this.setState({ screen: 'map', paused: false }),
+      hudScore: fmt(s.hud.score), hudFish: fmt(s.hud.fish), hudDist: fmt(s.hud.dist) + 'm',
+      energyFillStyle: {
+        width: Math.max(0, s.hud.energy) + '%', height: '100%', borderRadius: 999,
+        background: s.hud.energy > 30 ? 'linear-gradient(180deg,#ff9ec9,#f2589c)' : 'linear-gradient(180deg,#ff8d7a,#e8452f)',
+        transition: 'width .2s linear',
+      },
+      showHint: s.screen === 'game' && !s.hud.started && !s.paused,
+      playfield: this.buildPlayfield(),
+      stages: this.mapStages(),
+      resTitle: res.stars >= 1 ? 'RUN COMPLETE!' : 'RUN OVER…',
+      resScore: fmt(res.score), resDist: fmt(res.dist) + ' m',
+      resFish: '× ' + fmt(res.fish), resBone: '× ' + fmt(res.bone),
+      resNewBest: res.newBest, starsArr,
+    };
+  }
+}
+</script>
+</body>
+</html>

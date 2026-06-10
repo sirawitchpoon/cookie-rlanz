@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# build output (Cloudflare Pages rebuilds this; Wrangler deploys it locally)
+dist/
+
+# original design bundle (provenance only; the unpacked handoff lives in extracted/)
+Cookie Rlanz.zip
+
+# logs / os cruft
+*.log
+.DS_Store
+Thumbs.db
+.wrangler/

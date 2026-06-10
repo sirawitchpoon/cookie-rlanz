@@ -1,0 +1,5 @@
+# Cloudflare Pages config. With pages_build_output_dir set, deploying is just:
+#   npm run build && npx wrangler pages deploy
+name = "cookie-rlanz"
+compatibility_date = "2026-06-11"
+pages_build_output_dir = "dist"
