@@ -12,3 +12,6 @@ Cookie Rlanz.zip
 .DS_Store
 Thumbs.db
 .wrangler/
+shots/
+live*/
+dep-check/
